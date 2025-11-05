@@ -1,0 +1,35 @@
+using VitecTehtava1.Api.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace VitecTehtava1.Api.Controllers
+{
+    [Route("api/users")]
+    [ApiController]
+    public class UsersController : ControllerBase
+    {
+        private readonly AppDbContext _context;
+
+        public UsersController(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(User user)
+        {
+            try
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        
+        
+    }
+}

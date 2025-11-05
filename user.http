@@ -1,0 +1,8 @@
+@base_address = http://localhost:5285/api/users
+
+POST {{base_address}}
+Content-Type: application/json
+
+{
+  "name": "Jarmo M"
+}
