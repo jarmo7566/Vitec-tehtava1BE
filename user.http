@@ -4,5 +4,8 @@ POST {{base_address}}
 Content-Type: application/json
 
 {
-  "name": "Jarmo M"
+  "name": "c c"
 }
+
+###
+GET {{base_address}}

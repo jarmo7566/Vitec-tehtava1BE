@@ -1,5 +1,6 @@
 using VitecTehtava1.Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace VitecTehtava1.Api.Controllers
 {
@@ -29,7 +30,20 @@ namespace VitecTehtava1.Api.Controllers
             }
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            try
+            {
+                var users = await _context.Users.ToListAsync();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         
     }
 }
