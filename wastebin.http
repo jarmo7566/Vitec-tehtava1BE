@@ -1,0 +1,30 @@
+@base_address = http://localhost:5285/api/wastebins
+
+
+POST {{base_address}}
+Content-Type: application/json
+
+{
+  "address": "address2",
+  "user_id": "1"
+}
+
+
+###
+GET {{base_address}}
+
+//Requirement in the specification
+###
+GET {{base_address}}/3
+
+###
+PUT {{base_address}}/2
+Content-Type: application/json
+
+{
+  "address": "address1",
+  "user_id": "1"
+}
+
+###
+DELETE {{base_address}}/2

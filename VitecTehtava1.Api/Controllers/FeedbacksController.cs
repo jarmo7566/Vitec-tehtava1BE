@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace VitecTehtava1.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/feedbacks")]
     [ApiController]
     public class FeedbacksController : ControllerBase
     {

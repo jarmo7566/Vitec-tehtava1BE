@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace VitecTehtava1.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/wastebins")]
     [ApiController]
     public class WastebinsController : ControllerBase
     {
-                private readonly AppDbContext _context;
+        private readonly AppDbContext _context;
 
         public WastebinsController(AppDbContext context)
         {

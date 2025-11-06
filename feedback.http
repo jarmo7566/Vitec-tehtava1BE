@@ -1,0 +1,28 @@
+@base_address = http://localhost:5285/api/feedbacks
+
+//Requirement in the specification
+POST {{base_address}}
+Content-Type: application/json
+
+{
+    "user_id": "1"
+}
+
+
+###
+GET {{base_address}}
+
+//Requirement in the specification
+###
+GET {{base_address}}/3
+
+###
+PUT {{base_address}}/2
+Content-Type: application/json
+
+{
+  "user_id": "1"
+}
+
+###
+DELETE {{base_address}}/2

@@ -1,5 +1,6 @@
 @base_address = http://localhost:5285/api/users
 
+//Requirement in the specification
 POST {{base_address}}
 Content-Type: application/json
 
@@ -7,12 +8,15 @@ Content-Type: application/json
   "name": "name6"
 }
 
+//Requirement in the specification
 ###
 GET {{base_address}}
 
+//Requirement in the specification
 ###
 GET {{base_address}}/3
 
+//Requirement in the specification
 ###
 PUT {{base_address}}/3
 Content-Type: application/json
@@ -22,6 +26,7 @@ Content-Type: application/json
     "name": "h"
 }
 
+//Requirement in the specification
 ###
 DELETE {{base_address}}/3
 
