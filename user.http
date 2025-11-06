@@ -4,11 +4,20 @@ POST {{base_address}}
 Content-Type: application/json
 
 {
-  "name": "c c"
+  "name": "name6"
 }
 
 ###
 GET {{base_address}}
 
 ###
-GET {{base_address}}/6
+GET {{base_address}}/3
+
+###
+PUT {{base_address}}/3
+Content-Type: application/json
+
+{
+    "id":3,
+    "name": "h"
+}

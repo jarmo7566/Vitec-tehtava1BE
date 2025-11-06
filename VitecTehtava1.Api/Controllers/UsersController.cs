@@ -22,7 +22,7 @@ namespace VitecTehtava1.Api.Controllers
             {
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
-                return Ok(user);
+                return CreatedAtRoute("GetUserById", new { id = user.Id}, user);
             }
             catch (Exception ex)
             {
@@ -44,7 +44,7 @@ namespace VitecTehtava1.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetUserById")]
         public async Task<IActionResult> GetUserById(int id)
         {
             try
@@ -54,7 +54,7 @@ namespace VitecTehtava1.Api.Controllers
                 if (user == null)
                 {
                     return NotFound($"User with ID {id} not found.");
-                }           
+                }
                 return Ok(user);
             }
             catch (Exception ex)
@@ -62,6 +62,36 @@ namespace VitecTehtava1.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id,[FromBody] User user)
+        {
+            try
+            {
+                if (id != user.Id)
+                {
+                    return BadRequest($"User ID mismatch.");
+                }
+
+                var existingUser =
+
+                    await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
+
+                if (existingUser == null)
+                {
+                    return NotFound($"User with ID {id} not found.");
+                }
+                
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         
     }
 }
