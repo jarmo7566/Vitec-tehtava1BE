@@ -21,3 +21,7 @@ Content-Type: application/json
     "id":3,
     "name": "h"
 }
+
+###
+DELETE {{base_address}}/3
+

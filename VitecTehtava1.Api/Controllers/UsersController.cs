@@ -64,7 +64,7 @@ namespace VitecTehtava1.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id,[FromBody] User user)
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace VitecTehtava1.Api.Controllers
                 {
                     return NotFound($"User with ID {id} not found.");
                 }
-                
+
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();
                 return NoContent();
@@ -91,6 +91,29 @@ namespace VitecTehtava1.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(id);
+
+                if (user == null)
+                {
+                    return NotFound($"User with ID {id} not found.");
+                }
+                
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
 
         
     }
