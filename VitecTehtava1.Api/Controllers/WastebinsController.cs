@@ -4,25 +4,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace VitecTehtava1.Api.Controllers
 {
-    [Route("api/users")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class WastebinsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+                private readonly AppDbContext _context;
 
-        public UsersController(AppDbContext context)
+        public WastebinsController(AppDbContext context)
         {
             _context = context;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(User user)
+        public async Task<IActionResult> CreateWastebin(Wastebin wastebin)
         {
             try
             {
-                _context.Users.Add(user);
+                _context.Wastebins.Add(wastebin);
                 await _context.SaveChangesAsync();
-                return CreatedAtRoute("GetUserById", new { id = user.Id}, user);
+                return CreatedAtRoute("GetWastebinById", new { id = wastebin.Id}, wastebin);
             }
             catch (Exception ex)
             {
@@ -31,12 +31,12 @@ namespace VitecTehtava1.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetWastebins()
         {
             try
             {
-                var users = await _context.Users.ToListAsync();
-                return Ok(users);
+                var wastebins = await _context.Wastebins.ToListAsync();
+                return Ok(wastebins);
             }
             catch (Exception ex)
             {
@@ -44,18 +44,18 @@ namespace VitecTehtava1.Api.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "GetUserById")]
-        public async Task<IActionResult> GetUserById(int id)
+        [HttpGet("{id}", Name = "GetWastebinById")]
+        public async Task<IActionResult> GetWastebinById(int id)
         {
             try
             {
-                var user = await _context.Users.FindAsync(id);
+                var wastebin = await _context.Wastebins.FindAsync(id);
 
-                if (user == null)
+                if (wastebin == null)
                 {
-                    return NotFound($"User with ID {id} not found.");
+                    return NotFound($"Wastebin with ID {id} not found.");
                 }
-                return Ok(user);
+                return Ok(wastebin);
             }
             catch (Exception ex)
             {
@@ -64,25 +64,25 @@ namespace VitecTehtava1.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
+        public async Task<IActionResult> UpdateWastebin(int id, [FromBody] Wastebin wastebin)
         {
             try
             {
-                if (id != user.Id)
+                if (id != wastebin.Id)
                 {
-                    return BadRequest($"User ID mismatch.");
+                    return BadRequest($"Wastebin ID mismatch.");
                 }
 
-                var existingUser =
+                var existingWastebin =
 
-                    await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
+                    await _context.Wastebins.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
 
-                if (existingUser == null)
+                if (existingWastebin == null)
                 {
-                    return NotFound($"User with ID {id} not found.");
+                    return NotFound($"Wastebin with ID {id} not found.");
                 }
 
-                _context.Users.Update(user);
+                _context.Wastebins.Update(wastebin);
                 await _context.SaveChangesAsync();
                 return NoContent();
             }
@@ -93,18 +93,18 @@ namespace VitecTehtava1.Api.Controllers
         }
         
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteWastebin(int id)
         {
             try
             {
-                var user = await _context.Users.FindAsync(id);
+                var wastebin = await _context.Wastebins.FindAsync(id);
 
-                if (user == null)
+                if (wastebin == null)
                 {
-                    return NotFound($"User with ID {id} not found.");
+                    return NotFound($"Wastebin with ID {id} not found.");
                 }
                 
-                _context.Users.Remove(user);
+                _context.Wastebins.Remove(wastebin);
                 await _context.SaveChangesAsync();
                 return NoContent();
             }
@@ -113,6 +113,6 @@ namespace VitecTehtava1.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-     
+
     }
 }

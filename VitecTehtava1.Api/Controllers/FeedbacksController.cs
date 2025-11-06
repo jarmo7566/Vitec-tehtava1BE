@@ -4,25 +4,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace VitecTehtava1.Api.Controllers
 {
-    [Route("api/users")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class FeedbacksController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public UsersController(AppDbContext context)
+        public FeedbacksController(AppDbContext context)
         {
             _context = context;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(User user)
+        public async Task<IActionResult> CreateFeedback(Feedback feedback)
         {
             try
             {
-                _context.Users.Add(user);
+                _context.Feedbacks.Add(feedback);
                 await _context.SaveChangesAsync();
-                return CreatedAtRoute("GetUserById", new { id = user.Id}, user);
+                return CreatedAtRoute("GetFeedbackById", new { id = feedback.Id}, feedback);
             }
             catch (Exception ex)
             {
@@ -31,12 +31,12 @@ namespace VitecTehtava1.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetFeedbacks()
         {
             try
             {
-                var users = await _context.Users.ToListAsync();
-                return Ok(users);
+                var feedbacks = await _context.Feedbacks.ToListAsync();
+                return Ok(feedbacks);
             }
             catch (Exception ex)
             {
@@ -44,18 +44,18 @@ namespace VitecTehtava1.Api.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "GetUserById")]
-        public async Task<IActionResult> GetUserById(int id)
+        [HttpGet("{id}", Name = "GetFeedbackById")]
+        public async Task<IActionResult> GetFeedbackById(int id)
         {
             try
             {
-                var user = await _context.Users.FindAsync(id);
+                var feedback = await _context.Feedbacks.FindAsync(id);
 
-                if (user == null)
+                if (feedback == null)
                 {
-                    return NotFound($"User with ID {id} not found.");
+                    return NotFound($"Feedback with ID {id} not found.");
                 }
-                return Ok(user);
+                return Ok(feedback);
             }
             catch (Exception ex)
             {
@@ -64,25 +64,25 @@ namespace VitecTehtava1.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
+        public async Task<IActionResult> UpdateFeedback(int id, [FromBody] Feedback feedback)
         {
             try
             {
-                if (id != user.Id)
+                if (id != feedback.Id)
                 {
-                    return BadRequest($"User ID mismatch.");
+                    return BadRequest($"Feedback ID mismatch.");
                 }
 
-                var existingUser =
+                var existingFeedback =
 
-                    await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
+                    await _context.Feedbacks.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
 
-                if (existingUser == null)
+                if (existingFeedback == null)
                 {
-                    return NotFound($"User with ID {id} not found.");
+                    return NotFound($"Feedback with ID {id} not found.");
                 }
 
-                _context.Users.Update(user);
+                _context.Feedbacks.Update(feedback);
                 await _context.SaveChangesAsync();
                 return NoContent();
             }
@@ -91,20 +91,20 @@ namespace VitecTehtava1.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteFeedback(int id)
         {
             try
             {
-                var user = await _context.Users.FindAsync(id);
+                var feedback = await _context.Feedbacks.FindAsync(id);
 
-                if (user == null)
+                if (feedback == null)
                 {
-                    return NotFound($"User with ID {id} not found.");
+                    return NotFound($"Feedback with ID {id} not found.");
                 }
-                
-                _context.Users.Remove(user);
+
+                _context.Feedbacks.Remove(feedback);
                 await _context.SaveChangesAsync();
                 return NoContent();
             }
@@ -112,7 +112,6 @@ namespace VitecTehtava1.Api.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-        }
-     
-    }
+        } 
+   }
 }
