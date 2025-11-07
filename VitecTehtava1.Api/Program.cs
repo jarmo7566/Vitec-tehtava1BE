@@ -4,6 +4,19 @@ using VitecTehtava1.Api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins("http://localhost:5173",
+                                              "http://www.contoso.com").AllowAnyHeader()
+                                                  .AllowAnyMethod();;
+                      });
+});
+
 builder.Services.AddControllers();
 
 //Problems loading reference "https>json.schemastore.org... 
@@ -15,6 +28,8 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql("Host=localhost;Port=5432;Database=UserDb;Username=postgres;Password=psLDV2"));
 
 var app = builder.Build();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.MapControllers();
 
