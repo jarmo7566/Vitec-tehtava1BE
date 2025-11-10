@@ -73,11 +73,9 @@ namespace VitecTehtava1.Api.Controllers
                     return BadRequest($"User ID mismatch.");
                 }
 
-                var existingUser =
-
-                    await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
-
-                if (existingUser == null)
+                var userExist = _context.Users.Any(p => p.Id == id);
+ 
+                if (!userExist)
                 {
                     return NotFound($"User with ID {id} not found.");
                 }

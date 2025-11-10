@@ -14,19 +14,22 @@ GET {{base_address}}
 
 //Requirement in the specification
 ###
-GET {{base_address}}/3
+GET {{base_address}}/1
 
 //Requirement in the specification
 ###
-PUT {{base_address}}/3
+PUT {{base_address}}/4
 Content-Type: application/json
 
 {
-    "id":3,
-    "name": "h"
+
+    "id":"4",
+    "name": "h",
+    "email": "1@h",
+    "phone": "123"
 }
 
 //Requirement in the specification
 ###
-DELETE {{base_address}}/3
+DELETE {{base_address}}/9
 
